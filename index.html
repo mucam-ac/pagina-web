@@ -21,6 +21,7 @@
             <li><a href="#quienes-somos">Nosotras</a></li>
             <li><a href="#lo-que-hacemos">Acciones</a></li>
             <li><a href="#impacto">Impacto</a></li>
+            <li><a href="#galeria">Galería</a></li>
             <li><a href="donate.html" class="nav-cta">Donar</a></li>
         </ul>
     </nav>
@@ -262,6 +263,47 @@
         </div>
     </section>
 
+    <!-- GALERÍA -->
+    <section id="galeria" class="section section-pink">
+        <div class="section-inner">
+            <div class="section-label">Momentos que inspiran</div>
+            <h2>Nuestra <em>galería</em></h2>
+            <p style="max-width:640px;margin-bottom:2.5rem;">
+                Mujeres cardenenses recibiendo la caja "Mujeres que Inspiran", en distintos puntos de entrega
+                como parte de nuestra campaña de concientización sobre el cáncer de mama.
+            </p>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="images/galeria/galeria-01.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-02.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-03.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-04.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-05.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-06.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-07.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-08.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-09.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-10.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-11.jpg" alt="Voluntarias de MUCAM con cartel Mujeres Cardenenses contra el Cáncer de Mama" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-12.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-13.jpg" alt="Voluntaria de MUCAM con cartel Mujeres Cardenenses contra el Cáncer de Mama" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-14.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-15.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-16.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-17.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-18.jpg" alt="Beneficiarias de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+                <div class="gallery-item"><img src="images/galeria/galeria-19.jpg" alt="Beneficiaria de MUCAM con caja Mujeres que Inspiran" loading="lazy"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX DE GALERÍA -->
+    <div id="lightbox" class="lightbox-overlay">
+        <button class="lightbox-close" aria-label="Cerrar">✕</button>
+        <button class="lightbox-nav lightbox-prev" aria-label="Anterior">‹</button>
+        <img id="lightbox-img" src="" alt="">
+        <button class="lightbox-nav lightbox-next" aria-label="Siguiente">›</button>
+    </div>
+
     <!-- VINCULACIONES -->
     <section id="vinculaciones" class="section section-dark">
         <div class="section-inner">
@@ -436,6 +478,55 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeDonationModal();
         });
+
+        // GALERÍA - Lightbox
+        (function () {
+            const galleryImgs = Array.from(document.querySelectorAll('.gallery-item img'));
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const btnClose = lightbox.querySelector('.lightbox-close');
+            const btnPrev = lightbox.querySelector('.lightbox-prev');
+            const btnNext = lightbox.querySelector('.lightbox-next');
+            let currentIndex = 0;
+
+            function openLightbox(index) {
+                currentIndex = index;
+                lightboxImg.src = galleryImgs[currentIndex].src;
+                lightboxImg.alt = galleryImgs[currentIndex].alt;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function showImage(step) {
+                currentIndex = (currentIndex + step + galleryImgs.length) % galleryImgs.length;
+                lightboxImg.src = galleryImgs[currentIndex].src;
+                lightboxImg.alt = galleryImgs[currentIndex].alt;
+            }
+
+            galleryImgs.forEach((img, index) => {
+                img.addEventListener('click', () => openLightbox(index));
+            });
+
+            btnClose.addEventListener('click', closeLightbox);
+            btnPrev.addEventListener('click', () => showImage(-1));
+            btnNext.addEventListener('click', () => showImage(1));
+
+            lightbox.addEventListener('click', function (e) {
+                if (e.target === this) closeLightbox();
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showImage(-1);
+                if (e.key === 'ArrowRight') showImage(1);
+            });
+        })();
     </script>
 </body>
 </html>
